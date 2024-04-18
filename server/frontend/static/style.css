@@ -26,6 +26,46 @@ img{
 .container{
   justify-content: center;
 }
+
+.contact-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 1px 1px 5px black;
+    box-sizing: border-box;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.contact-container img{
+    width: 100%;
+    max-height: 400px;
+}
+
+.contact-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
+    margin-left: 5px;
+    border: 1px solid black;
+    width: 100%;
+}
+
+.contact-row img{
+    width: 150px;
+}
+
+.contact-info{
+    padding: 20px;
+    text-align: center;
+    background-color:rgb(0, 0, 0);
+    color: rgb(0, 163, 204);
+    width: 100%;
+}
+
 .details{
   font-size: 20px;
   color: rgb(97, 64, 128);
