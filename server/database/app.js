@@ -15,9 +15,7 @@ mongoose.connect("mongodb://mongo_db:27017/",{'dbName':'dealershipsDB'});
 
 
 const Reviews = require('./review');
-
 const Dealerships = require('./dealership');
-const dealership = require('./dealership');
 
 try {
   Reviews.deleteMany({}).then(()=>{
@@ -62,26 +60,32 @@ app.get('/fetchDealers', async (req, res) => {
     try {
         const documents = await Dealerships.find();
         res.json(documents);
-      } catch (error) {
+    } catch (error) {
         res.status(500).json({ error: 'Error fetching documents' });
-      }
+    }
 });
 
 // Express route to fetch Dealers by a particular state
 app.get('/fetchDealers/:state', async (req, res) => {
     try {
-        const documents = await Dealerships.find({dealership: req.params.state});
+        // Fetch all dealerships where 'state' matches the provided 'state'
+        const documents = await Dealerships.find({state: req.params.state});
         res.json(documents);
     } catch (error) {
-        res.status(500).json({ error: 'Error fetching documents' });
+        // Handle any errors that occur during the fetch
+        res.status(500).json({ error: 'Error fetching dealerships' });
     }
 });
 
 // Express route to fetch dealer by a particular id
 app.get('/fetchDealer/:id', async (req, res) => {
     try {
-        const documents = await Dealerships.find({dealership: req.params.id});
-        res.json(documents);
+        const documents = await Dealerships.find({id: req.params.id});
+        if (documents){
+            res.json(documents);
+        }else{
+            res.status(404).json({ error: 'No dealerships found with this id' });
+        }
     } catch (error) {
         res.status(500).json({ error: 'Error fetching documents' });
     }
