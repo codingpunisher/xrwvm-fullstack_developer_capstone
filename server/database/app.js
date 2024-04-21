@@ -67,12 +67,19 @@ app.get('/fetchDealers', async (req, res) => {
 
 // Express route to fetch Dealers by a particular state
 app.get('/fetchDealers/:state', async (req, res) => {
+    console.log("Request received for state:", req.params.state);  // This will log the state being queried
     try {
-        // Fetch all dealerships where 'state' matches the provided 'state'
-        const documents = await Dealerships.find({state: req.params.state});
-        res.json(documents);
+        const documents = await Dealerships.find({ state: req.params.state });
+        console.log("Documents found:", documents.length);  // This will show the number of documents found
+
+        if (documents.length > 0) {
+            res.json(documents);
+        } else {
+            console.log("No dealerships found for the state.");  // This logs if no dealerships are found
+            res.status(404).json({ error: 'No dealerships found in this state' });
+        }
     } catch (error) {
-        // Handle any errors that occur during the fetch
+        console.error("Error fetching dealerships:", error);  // Logs the error if one occurs
         res.status(500).json({ error: 'Error fetching dealerships' });
     }
 });
@@ -81,7 +88,7 @@ app.get('/fetchDealers/:state', async (req, res) => {
 app.get('/fetchDealer/:id', async (req, res) => {
     try {
         const documents = await Dealerships.find({id: req.params.id});
-        if (documents){
+        if (documents.length > 0){
             res.json(documents);
         }else{
             res.status(404).json({ error: 'No dealerships found with this id' });
