@@ -1,5 +1,7 @@
 from django.http import JsonResponse
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.models import User
+from .populate import initiate
 from django.views.decorators.csrf import csrf_exempt
 from .models import CarMake, CarModel
 from .restapis import get_request, analyze_review_sentiments, post_review
@@ -47,7 +49,7 @@ def registration(request):
     first_name = data['firstName']
     last_name = data['lastName']
     email = data['email']
-    
+
     if User.objects.filter(username=username).exists():
         return JsonResponse(
             {
@@ -63,7 +65,7 @@ def registration(request):
         last_name=last_name,
         password=password
     )
-    
+
     login(request, user)
     return JsonResponse({"userName": username, "status": "Authenticated"})
 
@@ -71,7 +73,7 @@ def registration(request):
 def get_cars(request):
     if not CarMake.objects.exists():
         initiate()
-    
+
     cars = [
         {"CarModel": car_model.name, "CarMake": car_model.car_make.name}
         for car_model in CarModel.objects.select_related('car_make')
@@ -90,7 +92,9 @@ def get_dealer_reviews(request, dealer_id):
         endpoint = "/fetchReviews/dealer/" + str(dealer_id)
         reviews = get_request(endpoint)
         for review in reviews:
-            review['sentiment'] = analyze_review_sentiments(review['review'])['sentiment']
+            review['sentiment'] = analyze_review_sentiments(
+                review['review']
+            )['sentiment']
         return JsonResponse({"status": 200, "reviews": reviews})
     return JsonResponse({"status": 400, "message": "Bad Request"})
 
@@ -111,5 +115,10 @@ def add_review(request):
             return JsonResponse({"status": 200})
         except Exception as e:
             logger.error("Error posting review: %s", str(e))
-            return JsonResponse({"status": 401, "message": "Error in posting review"})
+            return JsonResponse(
+                {
+                    "status": 401,
+                    "message": "Error in posting review"
+                }
+            )
     return JsonResponse({"status": 403, "message": "Unauthorized"})
