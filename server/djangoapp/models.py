@@ -18,7 +18,7 @@ class CarMake(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # Other fields as needed
-    
+
     def __str__(self):
         return self.name  # Return the name as the string representation
 
@@ -35,7 +35,7 @@ class CarMake(models.Model):
 
 class CarModel(models.Model):
     # Many-to-One relationship
-    car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)  
+    car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     CAR_TYPES = [
         ('COUPE', 'Coupe'),
@@ -59,20 +59,26 @@ class CarModel(models.Model):
         # Add more choices as required
     ]
     type = models.CharField(max_length=20, choices=CAR_TYPES, default='SUV')
-    year = models.IntegerField(default=2024,
+    year = models.IntegerField(
+        default=2024,
         validators=[
             MaxValueValidator(2024),
             MinValueValidator(2015)
-        ])
+        ]
+    )
     # Other fields as needed
     engine_type = models.CharField(max_length=50, blank=True)
     TRANS_TYPES = [
-    ('AUTOMATIC', 'Automatic'),
-    ('MANUAL', 'Manual'),
+        ('AUTOMATIC', 'Automatic'),
+        ('MANUAL', 'Manual'),
         # Add more choices as required
     ]
-    transmisson_type = models.CharField(max_length=20, choices=TRANS_TYPES, 
-    default='AUTOMATIC', blank=True)
+    transmisson_type = models.CharField(
+        max_length=20,
+        choices=TRANS_TYPES,
+        default='AUTOMATIC',
+        blank=True
+    )
     transmission_speed = models.CharField(max_length=50, blank= True)
 
     def __str__(self):
