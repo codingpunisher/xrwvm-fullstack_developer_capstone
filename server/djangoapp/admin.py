@@ -7,18 +7,18 @@ from .models import CarMake, CarModel
 # CarModelInline class
 class CarModelInline(admin.TabularInline):
     model = CarModel
-    extra = 1  # Specifies the number of blank forms to display 
-    #at the end of the inline.
+    extra = 1  # Specifies the number of blank forms to display
+    # at the end of the inline.
 
 
 # CarModelAdmin class
 class CarModelAdmin(admin.ModelAdmin):
-     # Columns shown in the admin list view
+    # Columns shown in the admin list view
     list_display = ('name', 'type', 'year', 'car_make')
-     # Filters available on the sidebar 
+    # Filters available on the sidebar
     list_filter = ('type', 'year', 'car_make')
     # Searchable fields
-    search_fields = ('name', 'type', 'make__name')  
+    search_fields = ('name', 'type', 'make__name')
 
 
 # CarMakeAdmin class with CarModelInline
