@@ -1,7 +1,7 @@
 # Uncomment the following imports before adding the Model code
 
 from django.db import models
-from django.utils.timezone import now
+# from django.utils.timezone import now
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -18,6 +18,7 @@ class CarMake(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # Other fields as needed
+    
     def __str__(self):
         return self.name  # Return the name as the string representation
 
@@ -30,28 +31,31 @@ class CarMake(models.Model):
 # - Year (IntegerField) with min value 2015 and max value 2023
 # - Any other fields you would like to include in car model
 # - __str__ method to print a car make object
+
+
 class CarModel(models.Model):
-    car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)  # Many-to-One relationship
+    # Many-to-One relationship
+    car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)  
     name = models.CharField(max_length=100)
     CAR_TYPES = [
-    ('COUPE', 'Coupe'),
-    ('CONVERTIBLE', 'Convertible'),
-    ('HATCHBACK', 'Hatchback'),
-    ('SUV', 'SUV'),
-    ('SEDAN', 'Sedan'),
-    ('MINIVAN', 'Minivan'),
-    ('CROSSOVER', 'Crossover'),
-    ('SPORTS_CAR', 'Sports car'),
-    ('TRUCK', 'Truck'),
-    ('WAGON', 'Wagon'),
-    ('MPV', 'MPV'),
-    ('HYBRID', 'Hybrid'),
-    ('JEEP', 'Jeep'),
-    ('COMPACT', 'Compact'),
-    ('LIMOUSINE', 'Limousine'),
-    ('MUSCLE_CARS', 'Muscle cars'),
-    ('ESTATE', 'Estate'),
-    ('SALOON', 'Saloon'),
+        ('COUPE', 'Coupe'),
+        ('CONVERTIBLE', 'Convertible'),
+        ('HATCHBACK', 'Hatchback'),
+        ('SUV', 'SUV'),
+        ('SEDAN', 'Sedan'),
+        ('MINIVAN', 'Minivan'),
+        ('CROSSOVER', 'Crossover'),
+        ('SPORTS_CAR', 'Sports car'),
+        ('TRUCK', 'Truck'),
+        ('WAGON', 'Wagon'),
+        ('MPV', 'MPV'),
+        ('HYBRID', 'Hybrid'),
+        ('JEEP', 'Jeep'),
+        ('COMPACT', 'Compact'),
+        ('LIMOUSINE', 'Limousine'),
+        ('MUSCLE_CARS', 'Muscle cars'),
+        ('ESTATE', 'Estate'),
+        ('SALOON', 'Saloon'),
         # Add more choices as required
     ]
     type = models.CharField(max_length=20, choices=CAR_TYPES, default='SUV')
@@ -67,7 +71,8 @@ class CarModel(models.Model):
     ('MANUAL', 'Manual'),
         # Add more choices as required
     ]
-    transmisson_type = models.CharField(max_length=20, choices=TRANS_TYPES, default='AUTOMATIC', blank=True)
+    transmisson_type = models.CharField(max_length=20, choices=TRANS_TYPES, 
+    default='AUTOMATIC', blank=True)
     transmission_speed = models.CharField(max_length=50, blank= True)
 
     def __str__(self):
