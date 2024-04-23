@@ -79,7 +79,7 @@ class CarModel(models.Model):
         default='AUTOMATIC',
         blank=True
     )
-    transmission_speed = models.CharField(max_length=50, blank= True)
+    transmission_speed = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         return self.name  # Return the name as the string representation
