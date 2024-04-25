@@ -82,7 +82,8 @@ img{
 }
 
 .homepage_links{
-  color:  rgb(97, 64, 128);
+  text-decoration: none;
+  color:  rgb(255, 255, 255);
   padding: 25%;
   font-size: larger;
   }
@@ -127,7 +128,7 @@ img{
 .nav_item{
   margin-left:15px;
   font-size: 20px;
-  color: black;
+  color: rgb(255, 255, 255);
   align-self: center;
 }
 
